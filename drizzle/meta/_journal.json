@@ -8,6 +8,13 @@
       "when": 1794987039570,
       "tag": "0000_sticky_vision",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1795752217030,
+      "tag": "0001_flawless_korvac",
+      "breakpoints": true
     }
   ]
 }
