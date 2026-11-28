@@ -14,17 +14,17 @@ const securityMiddleware = async (req: Request, res: Response, next: NextFunctio
 
         switch (role) {
             case "admin":
-                limit: 20;
+                limit= 20;
                 message = "Admin request limit exceeded (20 per minutes). Please wait!";
                 break;
             case "teacher":
             case "student":
-                limit: 10;
+                limit= 10;
                 message = "Student request limit exceeded (10 per minutes). Please wait!";
                 break;
             default:
                 limit= 5;
-                message: "Student request limit exceeded (5 per minutes). Sign up for higher limits!";
+                message= "Student request limit exceeded (5 per minutes). Sign up for higher limits!";
                 break;
         }
 
@@ -37,13 +37,13 @@ const securityMiddleware = async (req: Request, res: Response, next: NextFunctio
         )
 
         const arcjetRequest: ArcjetNodeRequest = {
-            headers: req.header,
+            headers: req.headers,
             method: req.method,
             url: req.originalUrl ?? req.url,
             socket: {remoteAddress: req.socket.remoteAddress ?? req.ip ?? "0.0.0.0"},
         };
 
-        const decision = await client.protect(arcjetRequest);
+        const decision = await client.protect(arcjetRequest, {requested: 1});
 
         if (decision.isDenied() && decision.reason.isBot())  {
             return res.status(403).json({error: 'Forbidden', message: 'Automated requests are not allowed!'});
